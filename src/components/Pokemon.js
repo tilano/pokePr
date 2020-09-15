@@ -11,6 +11,7 @@ import {
   Text,
 } from 'react-native';
 import Firebase from './../../database/firebase';
+import {stylesPokemon} from './styles/StylePokemon';
 
 class Login extends Component {
   state = {
@@ -28,16 +29,7 @@ class Login extends Component {
   render() {
     if (this.props.listPokemons.loading) {
       return (
-        <View
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
+        <View style={stylesPokemon.viewLoading}>
           <ActivityIndicator size="large" color="#9E9E9E" />
           <Text>Cargando...</Text>
         </View>
@@ -45,28 +37,28 @@ class Login extends Component {
     } else {
       return (
         <View>
-          <View style={styles.searchCont} />
+          <View style={stylesPokemon.searchCont} />
           <ScrollView>
-            <View style={styles.container}>
+            <View style={stylesPokemon.container}>
               {this.props.listPokemons.pokemons.results.map(
                 (pokemon, index) => {
                   return (
                     <TouchableOpacity
                       activeOpacity={0.5}
                       key={index}
-                      style={styles.card}
+                      style={stylesPokemon.card}
                       onPress={() =>
                         this.props.history.push('/Details', {
                           pokemon: pokemon.name,
                         })
                       }>
                       <Image
-                        style={{width: 150, height: 150}}
+                        style={stylesPokemon.imagePoke}
                         source={{
                           uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${pokemon.name}.png`,
                         }}
                       />
-                      <Text style={styles.textName}>{pokemon.name}</Text>
+                      <Text style={stylesPokemon.textName}>{pokemon.name}</Text>
                     </TouchableOpacity>
                   );
                 },
@@ -78,41 +70,5 @@ class Login extends Component {
     }
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    marginTop: 30,
-  },
-  textName: {
-    fontSize: 18,
-    color: 'black',
-  },
-  card: {
-    display: 'flex',
-    alignItems: 'center',
-    marginHorizontal: 20,
-    marginVertical: 10,
-    borderRadius: 10,
-    borderColor: 'blue',
-    borderWidth: 2,
-  },
-  searchCont: {
-    position: 'absolute',
-    marginBottom: 70,
-    left: '20%',
-    zIndex: 1,
-    marginTop: 10,
-  },
-  searchfeild: {
-    height: 40,
-    borderWidth: 1,
-    borderColor: '#000',
-    textAlign: 'center',
-    width: 250,
-    borderRadius: 50,
-  },
-});
+
 export default Login;
